@@ -1,0 +1,36 @@
+{
+    "name": "kinetics254/sigma",
+    "description": "A package for inter-system Integrations",
+    "type": "library",
+    "version": "1.0.1",
+    "authors": [
+        {
+            "name": "Michael",
+            "email": "michael.kamau@kinetics.com"
+        },
+        {
+            "name": "Anthony",
+            "email": "mwendwak@kinetics.com"
+        }
+    ],
+    "license": "GPL-3.0-or-later",
+    "require": {
+        "php": "^5.6|^7.0|^8.0",
+        "ext-curl": "*",
+        "nertiajs/inertia-laravel": "^0.3.4",
+        "php-curl-class/php-curl-class": "^8.9",
+        "tightenco/ziggy": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "KTL\\Sigma\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "KTL\\Sigma\\Providers\\SigmaServiceProvider"
+            ]
+        }
+    }
+}
