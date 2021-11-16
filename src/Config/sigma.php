@@ -13,9 +13,12 @@ return [
         'password' => env('SIGMA_PASSWORD', 'user'),
     ],
 
+    'services' => env('SIGMA_SERVICE', []),
+
     'api' => [
         'provider' => env('SIGMA_PROVIDERS', 'providers'),
         'wrappers' => env('SIGMA_WRAPPERS', 'wrappers'),
         'fields' => env('SIGMA_FIELDS', 'fields'),
+        'childWrappers' => env('SIGMA_CHILD_WRAPPERS', 'childWrappers'),
     ]
 ];

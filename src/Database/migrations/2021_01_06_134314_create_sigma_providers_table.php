@@ -18,7 +18,10 @@ class CreateSigmaProvidersTable extends Migration
             $table->string('Provider');
             $table->string('connectorGroup');
             $table->string('authType');
+            $table->string('providerType');
+            $table->string('company');
             $table->string('baseConnectionPath');
+            $table->string('authUrl');
             $table->string('userName')->nullable();
             $table->string('password')->nullable();
             $table->string('version');

@@ -44,7 +44,12 @@ class Transport implements TransportInterface
         $this->setErrorHandler(self::HTTP_BAD_REQUEST, new BadRequestErrorHandler($this));
         $this->setErrorHandler(self::HTTP_UNPROCESSABLE_ENTITY, new BadRequestErrorHandler($this));    }
 
-    public function setErrorHandler(int $code, ?AbstractErrorHandler $handler)
+    /**
+     * @param int $code
+     * @param AbstractErrorHandler|null $handler
+     * @return $this
+     */
+    public function setErrorHandler(int $code, ?AbstractErrorHandler $handler): Transport
     {
         $this->errorHandlers[$code] = $handler;
 
@@ -55,6 +60,13 @@ class Transport implements TransportInterface
         return $this;
     }
 
+    /**
+     * @param $endpoint
+     * @param array $data
+     * @param string $method
+     * @return mixed
+     * @throws ApiException
+     */
     public function request($endpoint, array $data = [], $method = 'get')
     {
         $rawResponse = $this->rawRequest($endpoint, $data, $method);
@@ -77,6 +89,12 @@ class Transport implements TransportInterface
         throw $exception;
     }
 
+    /**
+     * @param $endpoint
+     * @param array $data
+     * @param string $method
+     * @return mixed|null
+     */
     public function rawRequest($endpoint, array $data = [], $method = 'get')
     {
         $method = strtolower($method);
@@ -123,7 +141,12 @@ class Transport implements TransportInterface
         return $url . $this->appendData($data);
     }
 
-    public function appendData(array $data = []){
+    /**
+     * @param array $data
+     * @return string|null
+     */
+    public function appendData(array $data = []): ?string
+    {
         if (!count($data)){
             return null;
         }
@@ -135,8 +158,14 @@ class Transport implements TransportInterface
         return '?' . http_build_query($data);
     }
 
+    /**
+     * @param $data
+     * @return false|string
+     */
     public function encodeBody($data)
     {
+        if (empty($data)) return '';
+
         $this->getClient()->setHeader('Content-Type', static::JSON_MIME_TYPE);
         return json_encode($data);
     }

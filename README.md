@@ -2,35 +2,33 @@
 This is a laravel package to integrate systems. It uses metadata for integration in three levels the Provider, Wrapper and fields.
 
 ## Installation
+This release is hosted on github
 
-Release One of sigma is manually installed
-Clone the sigma repo
-```shell
-git clone git@github.com:kinetics254/sigma.git
-```
-Checkout the staging branch for latest release
-```shell
-git checkout staging
-```
-
-place sigma in package directory at the root of your project
-
-configure composer to discover sigma package
-
+To install sigma head over to your projects composer.json
+and add the sigma repository on the repository option.
 ```json
-"autoload": {
-    "psr-4": {
-        "kinetics254\\Sigma\\": "packages/kinetics254/sigma/src/",
-    }
-},
-"autoload-dev": {
-    "psr-4": {
-        "kinetics254\\Sigma\\": "packages/kinetics254/sigma/src/",
-    }
-}
+"repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/kinetics254/sigma"
+        }
+    ]
 ```
 
-Register SigmaServiceProvider in config app
+Add sigma on the require list in your composer.json
+```json
+"kinetics254/sigma": "dev-main",
+```
+
+Install sigma with composer require command
+```shell
+composer require kinetics254/sigma
+```
+
+This will install sigma package into your project and your are ready to go.
+Sigma has package autodiscovery turned on for laravel 5.5 and later so no need to register its service provider manually.
+
+Register SigmaServiceProvider in config app for laravel 5.5 and below
 ```php
 \KTL\Sigma\Providers\SigmaServiceProvider::class;
 ```
@@ -39,11 +37,10 @@ Configure Sigma BC credentials on your .env
 SIGMA_URL='http://domain:port/BC150/api/vendor/Sigma/version_no/'
 SIGMA_USER='username'
 SIGMA_PASSWORD='passsword'
+SIGMA_SERVICE='PROVIDER'
 ```
 
-
-Publish Sigma assets 
-
+Publish Sigma assets
 ```shell
 php artisan vendor:publish --provider=kinetics254\Sigma\Providers\SigmaServiceProvider
 ```
@@ -57,7 +54,6 @@ php artisan migrate
 ## Usage
 
 To use sigma use the registered facade
-
 sigma has a static method to perform all request, its signature is
 ```php
 Sigma::request('proivider', 'entity', [payload], 'method');
@@ -116,7 +112,24 @@ $data = [
 
 $res = Sigma::request('MAGNOLIA', 'refereeEntity', $data, 'delete');
 ```
+### Calling Codeunits in BC Request
+Set the method to be 'CU' for codeunits and the payload to be an array 
+these will be used as parameters in the codeunit function.
+```php
+$res = Sigma::request('MEMBERSHIPMANAGER', 'getProfomaInvoice', ['applicationNo' => "APP000033"], 'CU');
+```
+
+###Sync Job
+Schedule ```sigma:sync``` command to re-fetch providers, wrappers and fields from BC
+```php
+ $schedule->command('sigma:sync')->hourly();
+```
 
 ### Documentation
 To view sigma APi's definition go to ```/simga``` on your project
+
+### Next Release
+The next release will have ability to test sigma endpoints from the sigma UI
+
+
 
