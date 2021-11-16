@@ -1,15 +1,11 @@
 {
-    "name": "kinetics254/sigma",
+    "name": "kinare/sigma",
     "description": "A package for inter-system Integrations",
     "type": "library",
     "authors": [
         {
             "name": "Michael",
             "email": "michael.kamau@kinetics.com"
-        },
-        {
-            "name": "Anthony",
-            "email": "mwendwak@kinetics.com"
         }
     ],
     "license": "GPL-3.0-or-later",
